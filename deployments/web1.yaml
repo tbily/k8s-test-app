@@ -13,10 +13,11 @@ spec:
         app: web1
     spec:
       containers:
-      - name: nginx
-        image: nginx
-        ports:
-        - containerPort: 80
+        - name: banana-app
+          image: hashicorp/http-echo
+          args:
+            - "-text=banana"
+
 ---
 kind: Service
 apiVersion: v1
@@ -26,7 +27,7 @@ spec:
   selector:
     app: web1
   ports:
-    - port: 80
+    - port: 5678
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -53,4 +54,4 @@ spec:
    tls:
    - hosts:
      - web1.tomb.local
-     secretName: tomb.local # as expected by argocd-server
+     secretName: tomb.local
